@@ -1,7 +1,15 @@
-import React from 'react';
+import { Moon, Sun } from 'lucide-react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router';
 
 const Navbar = () => {
+  const [theme,setTheme] = useState('caramellatte');
+  const handleToggle=()=>{
+    const nextTheme = theme === 'synthwave' ? 'caramellatte' : 'synthwave';
+    setTheme(nextTheme);
+    localStorage.setItem('theme',nextTheme)
+    document.documentElement.setAttribute('data-theme',nextTheme);
+  }
     const links=<>
          <li><NavLink to="/">Home</NavLink></li>
          <li><NavLink to="/collection">Collectin</NavLink></li>
@@ -30,6 +38,11 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
+    <button onClick={handleToggle}>
+      {
+        theme === 'caramellatte' ? <Sun></Sun> : <Moon></Moon>
+      }
+    </button>
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
