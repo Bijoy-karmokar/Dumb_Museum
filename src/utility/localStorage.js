@@ -1,5 +1,5 @@
 const getData = (key)=>{
-    const storedData = localStorage.getItem("wantedData");
+    const storedData = localStorage.getItem(key);
     return storedData ? JSON.parse(storedData) : [];
 }
 
@@ -17,7 +17,7 @@ export const addWantedIdea = (id)=>{
      }
 }
 export const getUnwantedDataId =()=> getData('unWantedData');
-export const isunWantedIdeas =(id)=> getWantedDataId().includes(id);
+export const isunWantedIdeas =(id)=> getUnwantedDataId().includes(id);
 export const addunWantedIdea = (id)=>{
      const idea = getUnwantedDataId();
      if(!isunWantedIdeas(id)){

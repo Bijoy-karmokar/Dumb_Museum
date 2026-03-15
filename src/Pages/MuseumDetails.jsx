@@ -2,8 +2,13 @@ import React from "react";
 import Marquee from "react-fast-marquee";
 import { FaEye, FaRegStar } from "react-icons/fa";
 import { useLoaderData } from "react-router";
-import { addWantedIdea, isWantedIdeas } from "../utility/localStorage";
-import Notiflix from "notiflix";
+import {
+  addunWantedIdea,
+  addWantedIdea,
+  isunWantedIdeas,
+  isWantedIdeas,
+} from "../utility/localStorage";
+import Notiflix, { Confirm } from "notiflix";
 
 const MuseumDetails = () => {
   const data = useLoaderData();
@@ -20,14 +25,49 @@ const MuseumDetails = () => {
     quote,
   } = data || {};
 
-  const handleWantedIdea=(id)=>{
-      if(isWantedIdeas(id)){
-        Notiflix.Notify.failure("Wanted idea alreay exist.");
-        return;
-      }
-       addWantedIdea(id);
-       Notiflix.Notify.success("wanted idea added successfully.")
-  }
+  const handleWantedIdea = (id) => {
+    if (isWantedIdeas(id)) {
+      Notiflix.Notify.failure("Wanted idea alreay exist.");
+      return;
+    }
+    if (isunWantedIdeas(id)) {
+      Notiflix.Notify.failure("UnWanted idea already exist.");
+      return;
+    }
+
+    Confirm.show(
+      "Wanted Confirm",
+      "Do you agree with me?",
+      "Yes",
+      "No",
+
+      () => {
+        addWantedIdea(id);
+        Notiflix.Notify.success("anted idea added successfully.");
+      },
+    );
+  };
+  const handleunWantedIdea = (id) => {
+    if (isWantedIdeas(id)) {
+      Notiflix.Notify.failure("Wanted idea alreay exist.");
+      return;
+    }
+    if (isunWantedIdeas(id)) {
+      Notiflix.Notify.failure("UnWanted idea already exist.");
+      return;
+    }
+    Confirm.show(
+      "Unwanted Confirm",
+      "Do you agree with me?",
+      "Yes",
+      "No",
+
+      () => {
+        addunWantedIdea(id);
+        Notiflix.Notify.success("Unwanted idea added successfully.");
+      },
+    );
+  };
   return (
     <section className="dark:bg-gray-100 dark:text-gray-800">
       <div className="container flex flex-col items-center justify-center p-6 mx-auto py-10  lg:flex-row">
@@ -78,19 +118,25 @@ const MuseumDetails = () => {
           </div>
 
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <button onClick={()=>handleWantedIdea(id)} className="btn btn-secondary">I actually Want this!</button>
-            <button className="btn btn-secondary btn-outline">
+            <button
+              onClick={() => handleWantedIdea(id)}
+              className="btn btn-secondary"
+            >
+              I actually Want this!
+            </button>
+            <button
+              onClick={() => handleunWantedIdea(id)}
+              className="btn btn-secondary btn-outline"
+            >
               I don't Want this!
             </button>
           </div>
-          
-            <div className="rounded-2xl bg-base-300 text-base-content p-4">
-              <aside>
-                <Marquee>
-                 {quote}
-                </Marquee>
-              </aside>
-            </div>
+
+          <div className="rounded-2xl bg-base-300 text-base-content p-4">
+            <aside>
+              <Marquee>{quote}</Marquee>
+            </aside>
+          </div>
         </div>
       </div>
     </section>
