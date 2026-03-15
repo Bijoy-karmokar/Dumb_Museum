@@ -3,6 +3,7 @@ import MainLayouts from "../Layouts/MainLayouts";
 import Home from "../Pages/Home";
 import axios from "axios";
 import MuseumDetails from "../Pages/MuseumDetails";
+import Dashboard from "../Pages/Dashboard";
 
  const router = createBrowserRouter([
     {
@@ -26,6 +27,14 @@ import MuseumDetails from "../Pages/MuseumDetails";
               const data = museums.find(museum=> museum.id === parseInt(params.id));
               return data;
           }
+        },
+        {
+          path:'/dashboard',
+          Component:Dashboard,
+          loader:async()=> {
+             const res =  await axios('/museums.json');
+             return res.data;
+            }
         }
       ]
     }

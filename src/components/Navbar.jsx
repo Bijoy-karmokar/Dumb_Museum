@@ -4,8 +4,8 @@ import { Link, NavLink } from 'react-router';
 const Navbar = () => {
     const links=<>
          <li><NavLink to="/">Home</NavLink></li>
-         <li><NavLink to="/">Collectin</NavLink></li>
-         <li><NavLink to="/">Submit</NavLink></li>
+         <li><NavLink to="/collection">Collectin</NavLink></li>
+         <li><NavLink to="/submit">Submit</NavLink></li>
     </>
     return (
 <div className="navbar bg-base-100 shadow-sm">
@@ -42,10 +42,9 @@ const Navbar = () => {
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
+          <Link to={'/dashboard'} className="justify-between">
+            DashBoard
+          </Link>
         </li>
         <li><a>Settings</a></li>
         <li><a>Logout</a></li>
