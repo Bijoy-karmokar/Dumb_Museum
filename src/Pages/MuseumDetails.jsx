@@ -2,6 +2,8 @@ import React from "react";
 import Marquee from "react-fast-marquee";
 import { FaEye, FaRegStar } from "react-icons/fa";
 import { useLoaderData } from "react-router";
+import { addWantedIdea, isWantedIdeas } from "../utility/localStorage";
+import Notiflix from "notiflix";
 
 const MuseumDetails = () => {
   const data = useLoaderData();
@@ -18,6 +20,14 @@ const MuseumDetails = () => {
     quote,
   } = data || {};
 
+  const handleWantedIdea=(id)=>{
+      if(isWantedIdeas(id)){
+        Notiflix.Notify.failure("Wanted idea alreay exist.");
+        return;
+      }
+       addWantedIdea(id);
+       Notiflix.Notify.success("wanted idea added successfully.")
+  }
   return (
     <section className="dark:bg-gray-100 dark:text-gray-800">
       <div className="container flex flex-col items-center justify-center p-6 mx-auto py-10  lg:flex-row">
@@ -68,7 +78,7 @@ const MuseumDetails = () => {
           </div>
 
           <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-            <button className="btn btn-secondary">I actually Want this!</button>
+            <button onClick={()=>handleWantedIdea(id)} className="btn btn-secondary">I actually Want this!</button>
             <button className="btn btn-secondary btn-outline">
               I don't Want this!
             </button>
